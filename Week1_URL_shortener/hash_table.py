@@ -1,11 +1,7 @@
 # Using encode() method for creating hash table
 import hashlib
-import secrets
-
-def generate_random_url(base_url = "https://random.com/"):
-    token = secrets.token_urlsafe()
-    url = f"{base_url}{token}"
-    return url
+import pandas as pd
+from generate_url import generate_random_url
 
 class hashTable: 
     def __init__(self, size):
@@ -22,15 +18,23 @@ class hashTable:
         self.table[hash_element_index] = {key: url}
         return self.table
 
-hashTable = hashTable(10)
 
-list_of_urls = []
-for i in range(10): 
-    url = generate_random_url(base_url = "https://random.com/")
-    hash_array_index_number, key = hashTable.generate_hash_array_index_number(url, 10)
-    table = hashTable.setting_up_hash_table(hash_array_index_number, key, url)
+def main(): 
+    hash_table = hashTable(100)
+    list_of_urls = []
 
-print(hashTable.table[4])
+    for i in range(100): 
+        url = generate_random_url(base_url="https://random.com/")
+        hash_array_index_number, key = hash_table.generate_hash_array_index_number(url, 100)
+        table = hash_table.setting_up_hash_table(hash_array_index_number, key, url)
+        df = pd.DataFrame(table)
+        df.to_csv("list_of_url.csv", index=True)
+
+
+if __name__ == "__main__": 
+    main()  
+
+
 
 
 
